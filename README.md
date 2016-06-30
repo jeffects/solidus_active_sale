@@ -20,7 +20,7 @@ Introduction goes here.
 
 3. Copy & run migrations
   ```ruby
-  bundle exec rails g spree_active_sale:install
+  bundle exec rails g solidus_active_sale:install
   ```
 
 4. Restart your server
