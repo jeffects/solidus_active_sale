@@ -1,0 +1,126 @@
+<% if @active_sale_event.try(:errors).present? %>
+  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @active_sale_event } %>
+<% end %>
+
+  <fieldset data-hook="admin_active_sale_event_form_fields">
+
+    <div class="clearfix">
+      <div class="left eight columns alpha" data-hook="admin_active_sale_event_form_left">
+        <%= form.field_container :name do %>
+          <%= form.label :name, raw(t('spree.active_sale.event.active_record.name') + content_tag(:span, ' *', :class => 'required')) %>
+          <%= form.text_field :name, :class => 'fullwidth' %>
+          <%= form.error_message_on :name %>
+        <% end %>
+        <%= form.field_container :description do %>
+          <%= form.label :description, t('spree.active_sale.event.active_record.description') %>
+          <%= form.text_area :description, {:cols => 60, :rows => 10, :class => 'fullwidth'} %>
+          <%= form.error_message_on :description %>
+        <% end %>
+      </div>
+
+      <div class="right eight columns omega" data-hook="admin_active_sale_event_form_right">
+        <div class="row">
+          <div class="alpha four columns">
+            <%= form.field_container :start_datetime do %>
+              <%= form.label :start_datetime, t('spree.active_sale.event.active_record.start_datetime') %>
+              <%= form.error_message_on :start_datetime %>
+              <% if @active_sale_event.start_datetime? %>
+                <% start_datetime = l(@active_sale_event.start_datetime, :format => t('spree.active_sale.event.datetimepicker.format')) %>
+              <% else %>
+                <% start_datetime = l(Time.zone.now, :format => t('spree.active_sale.event.datetimepicker.format')) %>
+              <% end %>
+              <%= form.text_field :start_datetime, :value => start_datetime, :class => 'timepicker' %>
+            <% end %>
+          </div>
+  
+          <div class="omega four columns">
+            <%= form.field_container :end_datetime do %>
+              <%= form.label :end_datetime, t('spree.active_sale.event.active_record.end_datetime') %>
+              <%= form.error_message_on :end_datetime %>
+              <% end_datetime = l((@active_sale_event.end_datetime? ? @active_sale_event.end_datetime : Time.zone.now+1.day), :format => t('spree.active_sale.event.datetimepicker.format')) %>
+              <%= form.text_field :end_datetime, :value => end_datetime, :class => 'timepicker' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="omega four columns">
+            <%= form.label :product_name, t('spree.active_sale.event.active_record.product_name', :default => :product_name) %>
+            <p class='hint'><%= t('spree.active_sale.event.product_name_hint') %></p>
+            <%= form.error_message_on :product_name %>
+            <%= form.text_field :product_name, :class => 'autocomplete', :data => { :auto_complete_url => products_admin_active_sales_url } %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="alpha four columns clearfix">
+            <%= form.field_container :is_active, :class => ['checkbox'] do %>
+              <label>
+                <%= form.check_box :is_active %>
+                <%= t('spree.active_sale.event.active_record.is_active') %>
+                <%= form.error_message_on :is_active %>
+              </label>
+            <% end %>
+  
+            <%= form.field_container :is_hidden, :class => ['checkbox'] do %>
+              <label>
+                <%= form.check_box :is_hidden %>
+                <%= t('spree.active_sale.event.active_record.is_hidden') %>
+                <%= form.error_message_on :is_hidden %>
+              </label>
+            <% end %>
+  
+            <%= form.field_container :is_permanent, :class => ['checkbox'] do %>
+              <label>
+                <%= form.check_box :is_permanent %>
+                <%= t('spree.active_sale.event.active_record.is_permanent') %>
+                <%= form.error_message_on :is_permanent %>
+              </label>
+            <% end %>
+          </div>
+  
+          <div class="omega four columns">
+          <%= form.field_container :discount_percentage do %>
+            <%= form.label :discount_percentage, t('spree.active_sale.event.active_record.discount_percentage', :default => :discount_percentage) %>
+            <p class='hint'><%= t('spree.active_sale.event.discount_percentage_hint') %></p>
+            <%= form.error_message_on :discount_percentage %>
+            <%= form.text_field :discount_percentage %>
+          <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <% unless @active_sale_event.new_record? %>
+      <ul class="inline-menu">
+        <li><%= link_to_with_icon('icon-plus', Spree.t(:new_image), new_admin_active_sale_active_sale_event_sale_image_url(@active_sale, @active_sale_event), :id => 'new_sale_image_link', :class => 'button') %></li>
+      </ul>
+      <br/>
+      <%#= render 'spree/admin/shared/sale_images' %>
+    <% end %>
+
+
+    <p class="form-buttons" data-hook="admin_active_sale_form_buttons">
+      <% if @active_sale_event.new_record? %>
+        <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+      <% else %>
+        <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+      <% end %>
+    </p>
+  </fieldset>
+
+<%= javascript_tag do -%>
+  var properties = "<%= raw(@properties.to_json) %>";
+
+  $("#admin_active_sale_event input.autocomplete").on("keydown", function(){
+    var product_name = $('#active_sale_event_product_name').val();
+    var url = $(this).data('auto-complete-url')
+    already_auto_completed = $(this).is('ac_input');
+    if (!already_auto_completed) {
+      $(this).autocomplete({
+        source: url+"?name="+product_name
+      });
+      $(this).focus();
+    }
+  });
+<% end -%>
+
