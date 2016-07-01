@@ -26,7 +26,7 @@
       <tr id="<%= spree_dom_id active_sale %>" data-hook="active_sales_row" class="<%= cycle('odd', 'even')%>">
         <td>
           <span class="handle"></span>&nbsp;
-          <%= active_sale.name %>
+          <%= link_to active_sale.name, object_url(active_sale) %>
         </td>
         <td class="actions">
           <%= link_to_edit active_sale, :no_text => true %>

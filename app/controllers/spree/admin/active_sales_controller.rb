@@ -17,14 +17,12 @@ module Spree
       end
 
       def create
-        begin
-          if @active_sale = ActiveSale.create(active_sale_params)
-            flash[:success] = Spree.t(:successfully_created)
-            redirect_to admin_active_sale_path(@active_sale)
-          else
-            flash[:error] = Spree.t(:error_on_create)
-            render :new
-          end
+        if @active_sale = ActiveSale.create(active_sale_params)
+          flash[:success] = Spree.t(:successfully_created)
+          redirect_to admin_active_sale_path(@active_sale)
+        else
+          flash[:error] = Spree.t(:error_on_create)
+          render :new
         end
       end
 
@@ -80,9 +78,12 @@ module Spree
       end
 
       def product_hash
-        product_name = params[:active_sale].delete(:product_name)
-        product = Product.find_by_name(product_name)
-        { product_id: product.id, permalink: product.friendly_id }
+        if product_name = params[:active_sale].delete(:product_name)
+          product = Product.find_by_name(product_name)
+          { product_id: product.id, permalink: product.friendly_id }
+        else
+          {}
+        end
       end
 
     end

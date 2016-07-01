@@ -4,11 +4,9 @@
 #
 module Spree
   class ActiveSaleEvent < Spree::SaleEvent
-    acts_as_nested_set :dependent => :destroy, :polymorphic => true
 
     before_validation :update_permalink
     before_save :have_valid_position
-    after_save :update_parent_active_sales, :update_active_sale_position
 
     #TODO has_many :sale_images, :as => :viewable, :dependent => :destroy, :order => 'position ASC'
     belongs_to :product
@@ -16,7 +14,7 @@ module Spree
 
 #    attr_accessible :description, :end_date, :eventable_id, :eventable_type, :is_active, :is_hidden, :is_permanent, :name, :permalink, :active_sale_id, :start_date, :eventable_name, :discount, :parent_id
 
-    validates :name, :permalink, :eventable_id, :start_datetime, :end_datetime, :active_sale_id, :presence => true
+    validates :name, :permalink, :start_datetime, :end_datetime, :presence => true
 
     # Spree::ActiveSaleEvent.is_live? method
     # should only/ always represents live and active events and not just live events.
@@ -36,7 +34,7 @@ module Spree
 
     def update_permalink
       prefix = {"Spree::Taxon" => "t", "Spree::Product" => "products"}
-      self.permalink = [prefix[self.eventable_type], self.eventable.friendly_id].join("/") unless self.eventable.nil?
+      self.permalink = self.product.friendly_id unless self.product.nil?
     end
 
     # This callback basically makes sure that parents for an event lives longer.
