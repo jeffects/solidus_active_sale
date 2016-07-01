@@ -1,4 +1,6 @@
 en:
+  product:
+    product_name: 'Product Name'
   spree:
     active_sale:
       active_record:
@@ -15,8 +17,6 @@ en:
           name: "Event name"
           start_datetime: "Start date"
           end_datetime: "End date"
-          eventable_name: "Add the name to add type in event"
-          eventable_type: "Add a type for event"
           permalink: "Type the name or permalink"
           position: "Position"
         boolean:
@@ -36,8 +36,6 @@ en:
           current_text: 'Current'
           close_text: 'Close'
         ending_message: "SALE CLOSES IN"
-        eventable_hint: "Will this be a sale for an individual product or many based on a taxon?"
-        eventable_name_hint: "Enter the name of product or taxon this sale will include."
         discount_percentage_hint: "Integer number with the mean or max discount percentage (i.e. '30' to express a 30%)."
         flash:
           error: "The page you are looking for is no longer available."
@@ -77,5 +75,5 @@ en:
       tree_error: "Active Sale Tree Error"
     admin:
       tab:
-        active_sale: "Active Sale"
-        active_sales: "Active Sales"
+        active_sale_event: "Active Sale Event"
+        active_sale_events: "Active Sale Events"
