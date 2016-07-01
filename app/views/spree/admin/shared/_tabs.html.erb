@@ -34,11 +34,11 @@
   <%- end %>
 <% end %>
 
-<% if can? :admin, Spree::ActiveSale %>
+<% if can? :admin, Spree::ActiveSaleEvent %>
   <%= tab(
     *Spree::BackendConfiguration::ACTIVE_SALE_EVENT_TABS,
     url: spree.admin_active_sale_events_path,
-    label: :active_sale, icon: 'cubes') do %>
+    label: :active_sale_event, icon: 'cubes') do %>
     <%- render partial: 'spree/admin/shared/active_sale_event_sub_menu' %>
   <%- end %>
 <% end %>
