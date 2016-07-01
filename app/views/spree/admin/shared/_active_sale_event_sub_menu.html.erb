@@ -1,0 +1,5 @@
+<ul class="admin-subnav" data-hook="admin_stock_transfer_sub_tabs">
+  <% if can? :admin, Spree::ActiveSaleEvent %>
+    <%= tab :active_sale_events, match_path: '/active_sale_events' %>
+  <% end %>
+</ul>

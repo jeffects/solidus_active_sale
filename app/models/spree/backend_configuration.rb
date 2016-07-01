@@ -17,6 +17,6 @@ module Spree
     PROMOTION_TABS     ||= [:promotions, :promotion_categories]
     STOCK_TABS         ||= [:stock_items, :stock_transfers]
     USER_TABS          ||= [:users, :store_credits]
-    ACTIVE_SALE_TABS   ||= [:active_sales]
+    ACTIVE_SALE_EVENT_TABS   ||= [:active_sale_events]
   end
 end
