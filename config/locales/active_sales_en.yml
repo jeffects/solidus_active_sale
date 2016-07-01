@@ -1,6 +1,5 @@
 en:
-  product:
-    product_name: 'Product Name'
+  product_name: 'Product Name'
   spree:
     active_sale:
       active_record:
@@ -48,6 +47,7 @@ en:
           created: "Event was successfully created."
           updated: "Event was successfully updated."
           deleted: "Event has been deleted."
+        product_name_hint: 'Name of product to search for'
         title:
           new: "New event"
           edit: "Edit event"
